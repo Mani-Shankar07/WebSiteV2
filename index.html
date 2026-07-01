@@ -1177,6 +1177,89 @@ function showPage(name) {
   document.getElementById('hamburgerBtn').classList.remove('open');
 }
 
+  <! =========================================================================
+     LEGAL & COMPLIANCE PAGES (SPA VIEWS)
+     ========================================================================= -->
+
+<!-- Privacy Policy Section (DPDP Act 2023 Compliant) -->
+<div id="page-privacy" class="page" style="display:none;">
+    <div class="section-pad" style="max-width: 800px; margin: 0 auto; padding-top: 100px;">
+        <h1 style="font-family: 'Playfair Display', serif; margin-bottom: 24px;">Privacy Policy</h1>
+        <p style="color: var(--ink-mid); font-size: 0.95rem; margin-bottom: 32px;"><strong>Last Updated:</strong> July 2026</p>
+        
+        <p>Dr. Puja's Clinic ("we", "our", or "Clinic") is committed to protecting the privacy and security of your personal data. This Privacy Policy outlines our practices in strict compliance with the <strong>Digital Personal Data Protection (DPDP) Act, 2023</strong> of India.</p>
+        
+        <h3 style="margin-top: 24px;">1. Data We Collect</h3>
+        <p>When you use our online booking form or reach out via digital channels, we collect the following digital personal data:</p>
+        <ul style="margin-left: 20px; margin-bottom: 16px;">
+            <li>Full Name</li>
+            <li>Contact Phone Number</li>
+            <li>Email Address</li>
+            <li>Health Reason / Purpose of Consultation (provided voluntarily by you)</li>
+        </ul>
+
+        <h3 style="margin-top: 24px;">2. Purpose of Collection & Processing</h3>
+        <p>Your personal and medical information is processed solely for explicit, specific, and legitimate medical purposes:</p>
+        <ul style="margin-left: 20px; margin-bottom: 16px;">
+            <li>Facilitating online appointment bookings and managing clinic schedules.</li>
+            <li>Sending essential clinic communications (appointment confirmations, reminders, delays, or rescheduling alerts).</li>
+            <li>Answering direct clinical inquiries submitted by you.</li>
+        </ul>
+
+        <h3 style="margin-top: 24px;">3. Data Sharing and Third-Party Processors</h3>
+        <p>We do not sell, rent, or trade your personal data. To facilitate your digital requests, data is securely handled only by our chosen technical subprocessors:</p>
+        <ul style="margin-left: 20px; margin-bottom: 16px;">
+            <li><strong>EmailJS:</strong> Used securely to forward appointment submission forms from the browser directly to the clinic's internal medical email.</li>
+            <li><strong>WhatsApp (Meta):</strong> Triggered only if you voluntarily initiate communication via our direct WhatsApp click-to-chat links.</li>
+        </ul>
+
+        <h3 style="margin-top: 24px;">4. Data Retention Period</h3>
+        <p>We retain your digital data only as long as necessary to fulfill the medical scheduling purpose for which it was collected, or to comply with mandated standard medical record retention regulations under Indian healthcare laws.</p>
+
+        <h3 style="margin-top: 24px;">5. Your Rights Under the DPDP Act, 2023</h3>
+        <p>As a Principal Data Owner, the DPDP Act grants you clear, enforceable rights which you may exercise at any point:</p>
+        <ul style="margin-left: 20px; margin-bottom: 16px;">
+            <li><strong>Right to Access:</strong> The right to a summary of personal data being processed by us.</li>
+            <li><strong>Right to Correction & Erasure:</strong> The right to correct inaccuracies, complete incomplete info, or request erasure of personal data that is no longer necessary for scheduling.</li>
+            <li><strong>Right to Withdraw Consent:</strong> You may withdraw your consent for digital communications at any point.</li>
+            <li><strong>Right to Grievance Redressal:</strong> The right to register a complaint regarding data processing with the clinic before scaling to statutory boards.</li>
+        </ul>
+
+        <h3 style="margin-top: 24px;">6. Data Requests & Contact</h3>
+        <p>To exercise your data privacy rights, withdraw consent, or file a request, please contact our Data Protection Officer directly via email at: <a href="mailto:drpujasclinic@gmail.com" style="color: var(--teal-dark); font-weight: 600;">drpujasclinic@gmail.com</a>.</p>
+    </div>
+</div>
+
+<!-- Medical Disclaimer Section -->
+<div id="page-disclaimer" class="page" style="display:none;">
+    <div class="section-pad" style="max-width: 800px; margin: 0 auto; padding-top: 100px;">
+        <h1 style="font-family: 'Playfair Display', serif; margin-bottom: 24px;">Medical Disclaimer</h1>
+        <p>The information, content, text, graphics, and resources available on this website are provided strictly for general educational and informational purposes only.</p>
+        
+        <blockquote style="border-left: 4px solid var(--teal-dark); padding-left: 16px; margin: 24px 0; font-style: italic; color: var(--ink-mid);">
+            "This digital platform does not provide formal medical advice, diagnosis, or active treatment plans."
+        </blockquote>
+        
+        <p>Always seek the physical clinical advice of a qualified Senior Consultant Obstetrician & Gynaecologist regarding any personal medical condition or symptoms you may be experiencing. Never delay seeking professional medical treatment or disregard professional medical advice because of something you read or accessed via an online channel.</p>
+        <p>Using this website or requesting an appointment slot online does not automatically constitute or establish a binding doctor-patient relationship with Dr. Puja Prasad until a formal clinical examination takes place.</p>
+    </div>
+</div>
+
+<!-- Appointment Terms Section -->
+<div id="page-terms" class="page" style="display:none;">
+    <div class="section-pad" style="max-width: 800px; margin: 0 auto; padding-top: 100px;">
+        <h1 style="font-family: 'Playfair Display', serif; margin-bottom: 24px;">Appointment Terms & Conditions</h1>
+        
+        <h3 style="margin-top: 24px;">1. Booking Requests</h3>
+        <p>Submitting an online booking through this website is an appointment <em>request</em>. Slots are finalized based on live clinical schedules and the doctor’s real-time availability across designated hospital locations.</p>
+        
+        <h3 style="margin-top: 24px;">2. Cancellations & Rescheduling</h3>
+        <p>We respect your schedule and ask that you respect ours. If you need to cancel or shift an appointment, please give the clinic notice at least <strong>2 hours prior</strong> to your scheduled window via phone or WhatsApp so we can allocate that time to emergency patient cases.</p>
+        
+        <h3 style="margin-top: 24px;">3. Emergency Care</h3>
+        <p>Our online booking structure is intended exclusively for non-emergency scheduling. If you are experiencing acute, immediate medical emergencies or severe complications, please proceed directly to the nearest hospital casualty emergency room or visit our partnered multi-speciality hospital wards immediately.</p>
+    </div>
+</div>
 // ── MOBILE MENU ─────────────────────────────────────────
 function toggleMobileMenu() {
   const menu = document.getElementById('mobileMenu');

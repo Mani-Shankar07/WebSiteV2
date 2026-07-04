@@ -71,8 +71,8 @@ const BOOKING_CONFIG = {
   },
 
   formspree: {
-    endpoint: 'https://formspree.io/f/YOUR_FORM_ID', // ← paste
-    enabled: false, // set true once endpoint is filled
+    endpoint: 'https://formspree.io/f/mojoygkl', // ← paste
+    enabled: true, // set true once endpoint is filled
   },
 
   calendly: {

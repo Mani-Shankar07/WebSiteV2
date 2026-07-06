@@ -14,6 +14,17 @@ function showPage(name) {
   const target = document.getElementById('page-' + name);
   if (target) {
     target.classList.add('active');
+    const titles = {
+      home: "Dr. Puja's Clinic | Best Gynaecologist in Patparganj, East Delhi",
+      about: "About Dr. Puja Prasad | Senior Gynaecologist, Patparganj",
+      services: "Services | Dr. Puja's Clinic, Patparganj",
+      facilities: "Facilities | Dr. Puja's Clinic, Patparganj",
+      locations: "Locations & Timings | Dr. Puja's Clinic",
+      testimonials: "Patient Stories | Dr. Puja's Clinic",
+      blog: "Women's Health Blog | Dr. Puja Prasad",
+      contact: "Contact Us | Dr. Puja's Clinic, Patparganj",
+    };
+    if (titles[name]) document.title = titles[name];
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
   document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
@@ -30,14 +41,14 @@ function showPage(name) {
 // Restore page from URL hash on load (enables direct links & browser back/forward)
 function restorePageFromHash() {
   const hash = location.hash.replace('#', '').trim();
-  const validPages = ['home','about','services','facilities','locations','blog',
-                      'contact','testimonials','privacy','disclaimer','terms'];
+  const validPages = ['home', 'about', 'services', 'facilities', 'locations', 'blog',
+    'contact', 'testimonials', 'privacy', 'disclaimer', 'terms'];
   if (hash && validPages.includes(hash)) {
     showPage(hash);
   }
 }
 
-window.addEventListener('popstate', function(e) {
+window.addEventListener('popstate', function (e) {
   if (e.state && e.state.page) {
     showPage(e.state.page);
   }
@@ -46,7 +57,7 @@ window.addEventListener('popstate', function(e) {
 // ── MOBILE MENU ──────────────────────────────────────────────────────────────
 function toggleMobileMenu() {
   const menu = document.getElementById('mobileMenu');
-  const btn  = document.getElementById('hamburgerBtn');
+  const btn = document.getElementById('hamburgerBtn');
   const isOpen = menu.classList.contains('open');
   if (isOpen) {
     closeMobileMenu();
@@ -59,23 +70,23 @@ function toggleMobileMenu() {
 
 function closeMobileMenu() {
   const menu = document.getElementById('mobileMenu');
-  const btn  = document.getElementById('hamburgerBtn');
+  const btn = document.getElementById('hamburgerBtn');
   if (menu) menu.classList.remove('open');
-  if (btn)  { btn.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
+  if (btn) { btn.classList.remove('open'); btn.setAttribute('aria-expanded', 'false'); }
 }
 
 // Close mobile menu on outside click
-document.addEventListener('click', function(e) {
+document.addEventListener('click', function (e) {
   const menu = document.getElementById('mobileMenu');
-  const btn  = document.getElementById('hamburgerBtn');
+  const btn = document.getElementById('hamburgerBtn');
   if (menu && menu.classList.contains('open') &&
-      !menu.contains(e.target) && btn && !btn.contains(e.target)) {
+    !menu.contains(e.target) && btn && !btn.contains(e.target)) {
     closeMobileMenu();
   }
 });
 
 // ── STICKY NAV ───────────────────────────────────────────────────────────────
-window.addEventListener('scroll', function() {
+window.addEventListener('scroll', function () {
   const nav = document.getElementById('mainNav');
   if (nav) nav.classList.toggle('scrolled', window.scrollY > 10);
 }, { passive: true });
@@ -92,7 +103,7 @@ function openChat() {
 }
 
 // ── INIT ON DOM READY ────────────────────────────────────────────────────────
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   restorePageFromHash();
   // Initial nav state push
   const currentHash = location.hash.replace('#', '').trim();

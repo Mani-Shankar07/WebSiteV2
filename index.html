@@ -48,6 +48,7 @@
 </noscript>
 
 <link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/booking-widget.css">
 
 <!-- ── STRUCTURED DATA (Schema.org) ──────────────────────────────────── -->
 <script type="application/ld+json">
@@ -951,161 +952,12 @@
   </div>
 </footer>
 
-<!-- ═══════════════════════════ BOOKING MODAL ════════════════════════════════ -->
-<div class="modal-overlay" id="bookingOverlay" onclick="closeBookingOutside(event)"
-     role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle">
-  <div class="booking-modal">
-    <div class="booking-modal-header">
-      <button class="modal-close" onclick="closeBooking()" aria-label="Close booking modal">✕</button>
-      <h2 id="bookingModalTitle">Book an Appointment</h2>
-      <p class="modal-sub">With Dr. Puja Prasad · MBBS, MS (Obs &amp; Gyn), DMAS, FMAS</p>
 
-      <!-- Sticky availability bar (populated by booking.js on modal open) -->
-      <div id="modalAvailabilityBar" class="modal-availability-bar" style="display:none;" aria-live="polite"></div>
-
-      <!-- Step indicator -->
-      <div class="step-indicator" style="margin-top:20px;" aria-label="Booking progress">
-        <div class="step-wrapper"><div class="step-dot active" id="stepDot1" aria-current="step">1</div><div class="step-label active" style="font-size:10px;color:var(--teal);">Type</div></div>
-        <div class="step-line" id="stepLine1"></div>
-        <div class="step-wrapper"><div class="step-dot" id="stepDot2">2</div><div class="step-label" style="font-size:10px;color:var(--ink-faint);">Location</div></div>
-        <div class="step-line" id="stepLine2"></div>
-        <div class="step-wrapper"><div class="step-dot" id="stepDot3">3</div><div class="step-label" style="font-size:10px;color:var(--ink-faint);">Date &amp; Time</div></div>
-        <div class="step-line" id="stepLine3"></div>
-        <div class="step-wrapper"><div class="step-dot" id="stepDot4">4</div><div class="step-label" style="font-size:10px;color:var(--ink-faint);">Details</div></div>
-      </div>
-    </div>
-
-    <div class="booking-modal-body">
-
-      <!-- STEP 1: Type -->
-      <div class="step-content active" id="bookStep1">
-        <h4 style="font-family:var(--font-body);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:16px;">How would you like to consult?</h4>
-        <div class="type-cards">
-          <div class="type-card" id="typeCard_clinic" onclick="selectConsultationType('clinic')" role="button" tabindex="0" aria-label="In-Clinic Visit">
-            <span class="type-card-icon" aria-hidden="true">🏥</span>
-            <h4>In-Clinic Visit</h4>
-            <p>Visit Dr. Puja at one of 4 locations in East Delhi</p>
-          </div>
-          <div class="type-card" id="typeCard_video" onclick="selectConsultationType('video')" role="button" tabindex="0" aria-label="Video Consultation">
-            <span class="type-card-icon" aria-hidden="true">💻</span>
-            <h4>Video Consultation</h4>
-            <p>Consult from anywhere in India via secure video call</p>
-          </div>
-        </div>
-        <!-- Calendly alternative -->
-        <div style="text-align:center;margin-bottom:16px;">
-          <a href="https://calendly.com/YOUR_CALENDLY_LINK" target="_blank" rel="noopener noreferrer"
-             class="btn btn-outline btn-sm" style="width:100%;justify-content:center;">
-            📅 Or book directly via Calendly (opens in new tab)
-          </a>
-        </div>
-        <div class="booking-nav">
-          <button class="btn btn-outline btn-sm" onclick="closeBooking()">Cancel</button>
-          <button class="btn btn-primary btn-sm btn-disabled" id="step1Next" disabled onclick="goStep1Next()">
-            <span id="step1NextLabel">Next: Choose Location →</span>
-          </button>
-        </div>
-      </div>
-
-      <!-- STEP 2: Location -->
-      <div class="step-content" id="bookStep2">
-        <h4 style="font-family:var(--font-body);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:16px;">Choose your preferred location</h4>
-        <div class="location-options" id="locationOptionsList" role="list"></div>
-        <div class="booking-nav">
-          <button class="btn btn-outline btn-sm" onclick="renderStep(1)">← Back</button>
-          <button class="btn btn-primary btn-sm btn-disabled" id="step2Next" disabled onclick="renderStep(3)">Next: Choose Date →</button>
-        </div>
-      </div>
-
-      <!-- STEP 3: Date & Time -->
-      <div class="step-content" id="bookStep3">
-        <h4 style="font-family:var(--font-body);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:4px;" id="step3Title">Choose Date &amp; Time</h4>
-        <p style="font-size:12px;color:var(--ink-light);margin-bottom:16px;" id="step3LocationLabel"></p>
-        <div id="earliestSlotBanner" style="display:none;background:var(--teal-ghost);border:1px solid rgba(31,122,140,0.2);color:var(--ink-mid);border-radius:var(--r-md);padding:10px 14px;font-size:13px;font-weight:600;margin-bottom:16px;" role="status" aria-live="polite"></div>
-        <div class="calendar-wrap"><div id="calendarContainer" role="grid" aria-label="Select appointment date"></div></div>
-        <div id="slotsContainer" style="display:none;">
-          <h4 style="font-family:var(--font-body);font-size:13px;font-weight:600;color:var(--ink);margin-bottom:10px;">Available Time Slots</h4>
-          <div class="slots-grid" id="slotsGrid" role="list" aria-label="Available time slots"></div>
-        </div>
-        <div class="booking-nav">
-          <button class="btn btn-outline btn-sm" onclick="renderStep(bookingState.type==='video'?1:2)">← Back</button>
-          <button class="btn btn-primary btn-sm btn-disabled" id="step3Next" disabled onclick="renderStep(4)">Next: Your Details →</button>
-        </div>
-      </div>
-
-      <!-- STEP 4: Details -->
-      <div class="step-content" id="bookStep4">
-        <h4 style="font-family:var(--font-body);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:16px;">Your Details</h4>
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label" for="bName">Full Name *</label>
-            <input class="form-input" type="text" id="bName" placeholder="Patient's full name" autocomplete="name">
-            <div class="form-error" id="bNameError" role="alert"></div>
-          </div>
-          <div class="form-group">
-            <label class="form-label" for="bPhone">Phone Number *</label>
-            <input class="form-input" type="tel" id="bPhone" placeholder="10-digit mobile number" autocomplete="tel">
-            <div class="form-error" id="bPhoneError" role="alert"></div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="bEmail">Email Address <span style="font-weight:400;color:var(--ink-faint);">(for confirmation)</span></label>
-          <input class="form-input" type="email" id="bEmail" placeholder="your@email.com" autocomplete="email">
-        </div>
-        <div class="form-group">
-          <label class="form-label" for="bReason">Reason for Visit <span style="font-weight:400;color:var(--ink-faint);">(optional)</span></label>
-          <select class="form-select" id="bReason">
-            <option value="">Select a reason</option>
-            <option>Pregnancy / Antenatal care</option>
-            <option>Infertility consultation</option>
-            <option>PCOD / PCOS</option>
-            <option>Irregular periods</option>
-            <option>Gynaecological issue</option>
-            <option>General check-up</option>
-            <option>Pre-surgical consultation</option>
-            <option>Follow-up visit</option>
-            <option>Other</option>
-          </select>
-        </div>
-        <div class="booking-nav">
-          <button class="btn btn-outline btn-sm" onclick="renderStep(3)">← Back</button>
-          <button class="btn btn-primary btn-sm" onclick="validateDetails()">Review &amp; Confirm →</button>
-        </div>
-      </div>
-
-      <!-- CONFIRM STEP -->
-      <div class="step-content" id="bookStepConfirm">
-        <h4 style="font-family:var(--font-body);font-size:14px;font-weight:600;color:var(--ink);margin-bottom:16px;">Confirm your appointment</h4>
-        <div class="summary-rows" id="confirmSummaryRows" aria-live="polite"></div>
-        <div class="consent-row">
-          <input type="checkbox" id="bookingConsent">
-          <label for="bookingConsent">I consent to Dr. Puja's Clinic holding my appointment details and contacting me regarding this booking. I understand the consultation fee is due at the time of visit. My data is handled per our <a href="#privacy" onclick="showPage('privacy');closeBooking();return false;" style="color:var(--teal);">Privacy Policy</a>.</label>
-        </div>
-        <div id="integrationStatus" class="integration-status" aria-live="polite"></div>
-        <div class="booking-nav" style="margin-top:20px;">
-          <button class="btn btn-outline btn-sm" onclick="renderStep(4)">← Edit Details</button>
-          <button class="btn btn-primary btn-sm" id="confirmBtn" onclick="confirmBooking()">✓ Confirm Appointment</button>
-        </div>
-      </div>
-
-      <!-- SUCCESS STEP -->
-      <div class="step-content" id="bookStepSuccess">
-        <div class="confirm-screen" role="alert" aria-live="assertive">
-          <div class="confirm-tick" aria-hidden="true">✅</div>
-          <h3>Appointment Confirmed!</h3>
-          <p>Thank you. Your WhatsApp confirmation is opening shortly. The clinic will also receive a notification. Please arrive 5 minutes before your scheduled time.</p>
-          <div class="confirm-details" id="confirmSummaryFinal" aria-live="polite"></div>
-          <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:24px;">
-            <button class="btn btn-primary" onclick="closeBooking()">Done</button>
-            <a href="https://wa.me/919899416040?text=Hi%20Dr%20Puja%27s%20Clinic%2C%20I%27d%20like%20to%20confirm%20my%20appointment."
-               target="_blank" rel="noopener noreferrer" class="btn btn-wa">💬 WhatsApp Us</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div><!-- /bookingOverlay -->
+<!-- ═══════════════════════════ BOOKING WIDGET ═══════════════════════════════
+     Injected dynamically by js/booking-widget.js → injectBookingWidget()
+     The widget replaces the old 4-step modal with the screenshot-matching
+     bottom sheet UI. No static HTML needed here.
+════════════════════════════════════════════════════════════════════════════ -->
 
 <!-- ═══════════════════════════════ AI CHAT ═══════════════════════════════════ -->
 <button class="chat-fab" onclick="toggleChat()" id="chatFab"
@@ -1159,8 +1011,11 @@
 <style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}</style>
 
 <!-- ═══════════════════════════ SCRIPTS ══════════════════════════════════════ -->
-<!-- booking.js and chat.js loaded first (they define functions used by main.js) -->
+<!-- booking.js loaded first — defines LOCATIONS, slot helpers, BOOKING_CONFIG -->
 <script src="js/booking.js" defer></script>
+<!-- booking-widget.js — new screenshot-matching UI, depends on booking.js -->
+<script src="js/booking-widget.js" defer></script>
+<!-- chat.js — AI assistant -->
 <script src="js/chat.js" defer></script>
 <!-- main.js: showPage, nav, scroll, hash routing — loaded last -->
 <script src="js/main.js" defer></script>

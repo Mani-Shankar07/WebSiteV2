@@ -1,0 +1,32 @@
+# Dr. Puja's Clinic Website (WebSiteV2)
+
+Information and context regarding the official website for Dr. Puja's Clinic, a premium Gynaecology & Fertility Centre located in Patparganj, East Delhi.
+
+## Technical Stack
+- **Frontend:** Clean semantic HTML5, custom CSS (including utility-based layouts and responsive styling), vanilla JavaScript.
+- **Integrations:** EmailJS (client-side form handling), Google Tag Manager / Analytics, WhatsApp Click-to-Chat.
+- **SEO & Discoverability:** Highly optimized JSON-LD Structured Data Schema (`MedicalClinic`, `Physician`), semantic landmarks (`<nav>`, `<main>`, `<section>`), canonical headers, and performance preloads.
+
+## Core Pages & Architecture
+The website uses a single-page application architectural flow controlled via JavaScript (`showPage()`), handling multiple distinct views seamlessly within a single `<main>` container:
+
+- **Home (`#home`):** Hero section featuring an interactive appointment booking trigger, verified trust signals (Practo Prime validation, 23+ years experience badge), and a comprehensive services grid.
+- **About (`#about`):** Detailed professional bio, educational background (MBBS, MS, DMAS, FMAS), and key practice philosophy.
+- **Services (`#services`):** Comprehensive breakdown of medical specialties including Obstetrics, Infertility, PCOD Management, and Laparoscopic (Minimal Access) Surgery.
+- **Facilities (`#facilities`):** Overview of clinical infrastructure, medical diagnostic equipment, and patient comfort standards.
+- **Locations (`#locations`):** Schedule matrix mapping hours across multiple physical OPD sites (Madhu Vihar, Pushpanjali Hospital, Max Super Speciality, Femmenest).
+- **Blog (`#blog`):** Educative patient guides, health articles, and medical advice summaries.
+- **Contact (`#contact`):** Lead capture forms managed via EmailJS, operational maps, and direct emergency routing info.
+
+## Critical Business Rules & Configuration Data
+- **Domain:** `https://drpujaprasad.in/`
+- **Primary Contact Number:** `+91-9899416040`
+- **Primary Email:** `drpujasclinic@gmail.com`
+- **Consultation Fees:** Transparent fee structures starting at ₹800–₹1000.
+- **Booking Rules:** Active appointment options must bridge both internal form logic and the external scheduler layout.
+
+## Key Files
+- `/index.html` - Primary layout, single-page DOM containers, global configuration metadata, and JSON-LD markup.
+- `/css/style.css` - Core design system, typography matrices, color variables (`#12282D`), and adaptive media queries.
+- `/css/booking-widget.css` - UI layout structures explicitly formatting the interactive appointment booking modals.
+- `/js/` - Logic handlers orchestrating SPA navigation, EmailJS transaction requests, and state management.

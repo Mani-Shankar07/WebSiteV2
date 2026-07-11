@@ -188,7 +188,10 @@ textarea {
 .page.active {
   display: block;
 }
-
+.page-section {
+  content-visibility: auto;
+  contain-intrinsic-size: 1000px;
+}
 /* ── BUTTONS ───────────────────────────── */
 .btn {
   display: inline-flex;

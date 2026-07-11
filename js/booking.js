@@ -76,7 +76,7 @@ const BOOKING_CONFIG = {
   },
 
   calendly: {
-    url: 'https://calendly.com/YOUR_CALENDLY_LINK', // ← paste
+    url: 'https://calendly.com/pujasclinic/15min', // ← paste
   },
 
   whatsapp: {

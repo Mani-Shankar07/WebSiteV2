@@ -1,0 +1,52 @@
+name: Convert Images to WebP
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'images/**/*.jpg'
+      - 'images/**/*.jpeg'
+      - 'images/**/*.png'
+  workflow_dispatch:
+
+jobs:
+  convert-images:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install ImageMagick
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
+
+      - name: Convert images to WebP
+        run: |
+          # Find all jpg, jpeg, and png files in the images directory
+          find images -type f \( -iname "*.jpg" -o -iname "*.jpeg" -o -iname "*.png" \) | while read file; do
+            # Get the filename without extension
+            filename="${file%.*}"
+            # Convert to WebP
+            convert "$file" "${filename}.webp"
+            echo "Converted: $file -> ${filename}.webp"
+          done
+
+      - name: Commit and push WebP files
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          
+          # Check if there are any new webp files to commit
+          if git add images/*.webp 2>/dev/null; then
+            if ! git diff --cached --quiet; then
+              git commit -m "Convert images to WebP format"
+              git push
+            else
+              echo "No new WebP files to commit"
+            fi
+          else
+            echo "No WebP files found"
+          fi
+        continue-on-error: true

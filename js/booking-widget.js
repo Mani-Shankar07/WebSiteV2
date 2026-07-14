@@ -310,12 +310,6 @@ function renderBookingScreen() {
       ${date ? buildSlots(isVideo ? LOCATIONS[0] : loc, date, widgetState.slotsExpanded) : '<div class="bw-no-slots">Select a date above</div>'}
     </div>
 
-    <!-- Calendly alternative -->
-    <div class="bw-calendly-row">
-      <span class="bw-or-text">or</span>
-      <a href="https://calendly.com/droujasclinic/15min" target="_blank" rel="noopener noreferrer"
-         class="bw-calendly-link">Book via Calendly ↗</a>
-    </div>
   `;
 }
 

@@ -188,12 +188,10 @@ textarea {
 .page.active {
   display: block;
 }
-
 .page-section {
   content-visibility: auto;
   contain-intrinsic-size: 1000px;
 }
-
 /* ── BUTTONS ───────────────────────────── */
 .btn {
   display: inline-flex;
@@ -562,7 +560,6 @@ textarea {
   line-height: 1.7;
   margin-bottom: var(--space-8);
   max-width: 480px;
-  order: 3;
 }
 
 .hero-actions {
@@ -570,7 +567,6 @@ textarea {
   gap: var(--space-3);
   flex-wrap: wrap;
   margin-bottom: var(--space-10);
-  order: 3;
 }
 
 .hero-proof {
@@ -578,7 +574,6 @@ textarea {
   align-items: center;
   gap: var(--space-5);
   flex-wrap: wrap;
-  order: 3;
 }
 
 .hero-proof-item {
@@ -603,13 +598,7 @@ textarea {
 /* Hero visual */
 .hero-visual {
   position: relative;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-width: 280px;
-  order: 2;
-  margin: 16px 0;
+  height: 560px;
 }
 
 .hero-img-frame {
@@ -2756,21 +2745,15 @@ textarea {
   }
 
   .hero-visual {
-    position: relative;
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-width: 280px;
+    display: block;
+    height: 300px;
+    margin: 0 auto 24px;
+    order: -1;
   }
 
-  .hero-img-frame picture,
-  .hero-img-frame img{
-    display: block;
-    width: 100%;
-    max-width: 100%;
-    height: auto;
-    object-fit: cover;
+  .hero-img-frame {
+    width: 200px;
+    height: 280px;
   }
 
   .hero-img-bg-shape {
@@ -2820,7 +2803,6 @@ textarea {
   }
 
   .hero-h1 {
-    order: 1;
     font-size: 36px;
   }
 
@@ -2925,7 +2907,6 @@ textarea {
 .assoc-locations-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  align-items: start;
   gap: 20px;
 }
 

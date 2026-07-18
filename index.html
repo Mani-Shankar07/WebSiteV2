@@ -56,11 +56,9 @@
   </noscript>
 
   <link rel="stylesheet" href="css/style.css">
-  <!-- Replace your current booking-widget link with this: -->
-  <link rel="stylesheet" href="css/booking-widget.css" media="print" onload="this.media='all'">
-  <noscript>
-    <link rel="stylesheet" href="css/booking-widget.css">
-  </noscript>
+  <!-- Booking widget stylesheet — loaded synchronously so styles are ready
+       before the widget JS runs. No media="print" trick needed here. -->
+  <link rel="stylesheet" href="css/booking-widget.css">
 
   <!-- ── STRUCTURED DATA (Schema.org) ──────────────────────────────────── -->
   <script type="application/ld+json">

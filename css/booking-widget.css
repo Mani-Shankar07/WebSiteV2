@@ -1,30 +1,31 @@
-/* ============================================================
-   DR. PUJA'S CLINIC — Booking Widget v2
-   Bottom sheet (mobile) + centred modal (desktop)
-   Matches the provided screenshot UI exactly.
-   ============================================================ */
+/* css/booking-widget.css */
 
-/* ── OVERLAY ──────────────────────────────────────────────── */
-.bw-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 2000;
-  background: rgba(18, 40, 45, 0.55);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  align-items: flex-end;      /* mobile: sheet at bottom */
-  justify-content: center;
+/* Persistant Clinic Title Branding Header */
+.branding-header {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    text-align: center;
+    flex: 1;
 }
 
-.bw-overlay.open {
-  display: flex;
-  animation: bwFadeIn 0.2s ease forwards;
+/* Horizontal Location Switcher Tabs (Practo Style) */
+.location-tabs-container {
+    width: 100%;
+    margin-bottom: 16px;
+    border-bottom: 1px solid #e2e8f0;
+    padding-bottom: 4px;
 }
 
-@keyframes bwFadeIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+.location-tabs-scroll {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    padding: 4px 8px;
+    scrollbar-width: none; /* Hide scrollbars Firefox */
 }
 
 /* ── SHEET — mobile bottom sheet ─────────────────────────── */
@@ -46,11 +47,52 @@
   position: relative;
 }
 
-.bw-sheet.in {
-  transform: translateY(0);
+.location-tab {
+    background: #f1f5f9;
+    color: #64748b;
+    border: 1px solid #cbd5e1;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
 }
 
-/* ── SHEET — desktop centred modal ───────────────────────── */
+.location-tab.active {
+    background: #0f766e; /* Professional Teal Accent color */
+    color: #ffffff;
+    border-color: #0f766e;
+    box-shadow: 0 2px 4px rgba(15, 118, 110, 0.2);
+}
+
+/* Date Selector Grid with Vertical Month Indicator Sidebar */
+/* ── OVERLAY ─────────────────────────────────────────────────
+   Must appear before .bw-sheet so the sheet stacks correctly    */
+.bw-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(18, 40, 45, 0.55);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  /* mobile: sheet sits at bottom */
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.bw-overlay.open {
+  display: flex;
+  animation: bwFadeIn 0.2s ease forwards;
+}
+
+@keyframes bwFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── DESKTOP modal override — must be inside @media ─────────── */
 @media (min-width: 769px) {
   .bw-overlay {
     align-items: center;
@@ -71,6 +113,7 @@
     opacity: 1;
   }
 }
+
 
 /* ── DRAG HANDLE ──────────────────────────────────────────── */
 .bw-drag-handle {
@@ -324,22 +367,33 @@
 
 .bw-date-scroll::-webkit-scrollbar { display: none; }
 
-/* Month label pill */
+/* Vertical month label — writing-mode on the element itself so it works
+   whether the content is bare text or wrapped in a <span> */
 .bw-date-month {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 28px;
+  flex-shrink: 0;
+  /* pill-style background matching screenshot */
+  background: #f4f1ec;
+  border-radius: 10px;
+  padding: 10px 4px;
+}
+
+/* vertical text — applies whether content is bare text or a <span> */
+.bw-date-month,
+.bw-date-month span {
   writing-mode: vertical-rl;
   text-orientation: mixed;
   transform: rotate(180deg);
   font-size: 11px;
   font-weight: 700;
   color: #8fa8ad;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 28px;
-  flex-shrink: 0;
-  padding: 8px 0;
+  line-height: 1;
+  user-select: none;
 }
 
 /* Date pill */

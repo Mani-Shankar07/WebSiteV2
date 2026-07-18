@@ -125,34 +125,50 @@ function closeBookingOutside(e) {
 
 // ── DATE STRIP (skeleton first paint, then patched with real availability) ───
 function buildDateStrip(summary) {
-  const days = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const days   = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
   const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const today = new Date();
-  const items = [];
+  const today  = new Date();
+  const items  = [];
 
-  items.push(`<div class="bw-date-month" aria-hidden="true">${months[today.getMonth()]}</div>`);
+  // Vertical month label — CSS handles the rotation on .bw-date-month itself
+  items.push(`<div class="bw-date-month" aria-hidden="true">${months[today.getMonth()].toUpperCase()}</div>`);
 
-  for (let i = 0; i < 14; i++) {
-    const d = new Date(today);
+  // Collect only open (non-closed) days — show max 4 at a time
+  // Scans up to 14 days ahead so locations open only 2 days/week still get 4 pills
+  const openDays = [];
+  for (let i = 0; i < 14 && openDays.length < 4; i++) {
+    const d  = new Date(today);
     d.setDate(today.getDate() + i);
-    const ds = formatDateStr(d);
+    const ds   = formatDateStr(d);
     const info = summary ? summary[ds] : null;
 
+    // If summary not loaded yet, show all days as loading (skeleton state)
+    if (!summary) {
+      openDays.push({ i, d, ds, info: null });
+      continue;
+    }
+
+    // Skip fully closed days so they don't waste a pill slot
+    if (info && info.status === 'closed') continue;
+
+    openDays.push({ i, d, ds, info });
+  }
+
+  for (const { i, d, ds, info } of openDays) {
     const isSelected = widgetState.date === ds;
-    let label = 'Loading…';
+    let label = summary ? 'Loading…' : 'Loading…';
     let indicatorClass = '';
     let disabled = false;
 
     if (info) {
-      const disabledStatuses = { closed: 'Closed', full: 'Full' };
-      if (disabledStatuses[info.status]) {
-        label = disabledStatuses[info.status];
-        indicatorClass = info.status === 'closed' ? 'bw-ind-closed' : 'bw-ind-full';
+      if (info.status === 'full') {
+        label = 'Full';
+        indicatorClass = 'bw-ind-full';
         disabled = true;
       } else if (info.status === 'few') {
         label = `${info.available} left`;
         indicatorClass = 'bw-ind-few';
-      } else {
+      } else if (info.status === 'open' || info.status === 'available') {
         label = 'Available';
         indicatorClass = 'bw-ind-open';
       }

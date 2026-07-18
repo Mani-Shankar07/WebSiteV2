@@ -188,10 +188,12 @@ textarea {
 .page.active {
   display: block;
 }
+
 .page-section {
   content-visibility: auto;
   contain-intrinsic-size: 1000px;
 }
+
 /* ── BUTTONS ───────────────────────────── */
 .btn {
   display: inline-flex;
@@ -497,11 +499,20 @@ textarea {
   padding: var(--space-20) var(--space-6);
   display: grid;
   grid-template-columns: 1fr 480px;
+  grid-template-rows: auto auto;
   gap: var(--space-16);
   align-items: center;
 }
 
-.hero-content {}
+.hero-content {
+  grid-column: 1;
+  grid-row: 1;
+}
+
+.hero-cta-group {
+  grid-column: 1;
+  grid-row: 2;
+}
 
 .hero-status {
   display: inline-flex;
@@ -599,6 +610,8 @@ textarea {
 .hero-visual {
   position: relative;
   height: 560px;
+  grid-column: 2;
+  grid-row: span 2;
 }
 
 .hero-img-frame {
@@ -2740,30 +2753,31 @@ textarea {
     height: 400px;
   }
 
-  .hero-inner {
-    grid-template-columns: 1fr;
-  }
+  @media (max-width: 1024px) {
+    .hero-inner {
+      grid-template-columns: 1fr;
+    }
 
-  .hero-visual {
-    display: block;
-    height: 300px;
-    margin: 0 auto 24px;
-    order: -1;
-  }
+    .hero-content {
+      grid-column: auto;
+      grid-row: auto;
+      order: 1;
+    }
 
-  .hero-img-frame {
-    width: 200px;
-    height: 280px;
-  }
+    .hero-visual {
+      grid-column: auto;
+      grid-row: auto;
+      order: 2;
+      display: block;
+      height: 300px;
+      margin: 0 auto 24px;
+    }
 
-  .hero-img-bg-shape {
-    width: 230px;
-    height: 310px;
-  }
-
-  .hero-card-top,
-  .hero-card-bottom {
-    display: none;
+    .hero-cta-group {
+      grid-column: auto;
+      grid-row: auto;
+      order: 3;
+    }
   }
 }
 

@@ -14,7 +14,7 @@ jobs:
       - name: Check Website Status
         run: |
           # Replace the URL below with your actual live GitHub Pages URL if it differs
-          STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" https://drpujaclinic.github.io/WebSiteV2/)
+          STATUS_CODE=$(curl -s -L -o /dev/null -w "%{http_code}" https://drpujaprasad.in/)
           
           echo "Website responded with status code: $STATUS_CODE"
           

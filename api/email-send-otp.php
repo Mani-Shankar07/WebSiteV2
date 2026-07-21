@@ -1,20 +1,12 @@
 <?php
-// 1. Force error reporting ON
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-echo "Milestone 1: Public stub reached\n";
-
-// 2. Attempt to load the private backend file
-$backendPath = dirname($_SERVER['DOCUMENT_ROOT']) . '/backend/api/email-send-otp.php';
-
-if (!file_exists($backendPath)) {
-    die("Error: Backend file not found at " . $backendPath);
-}
-
-echo "Milestone 2: Backend file exists, loading it now...\n";
-
-require $backendPath;
-
-echo "Milestone 3: Backend file finished executing successfully!\n";
+/**
+ * Public router stub — lives in public_html/api/ so
+ * https://drpujaprasad.in/api/email-send-otp.php works, without the real
+ * backend code living inside the web root.
+ *
+ * Do NOT add echo/print/var_dump/ini_set('display_errors',1) here — any
+ * stray output before or after the require breaks response.json() on
+ * the frontend, since it must return pure JSON. Debug via error_log()
+ * inside the backend file instead, and check the PHP error log.
+ */
+require dirname($_SERVER['DOCUMENT_ROOT']) . '/backend/api/email-send-otp.php';

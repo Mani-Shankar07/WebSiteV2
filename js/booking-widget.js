@@ -894,7 +894,7 @@ async function bwVerifyEmailOTP() {
 
   const res = await bwApi('/email-verify-otp.php', {
     method: 'POST',
-    body: { email: widgetState.email, otp },
+    body: { email: widgetState.email, phone: widgetState.phone, otp },
   });
 
   if (btn) { btn.disabled = false; btn.textContent = 'Verify & Continue'; }

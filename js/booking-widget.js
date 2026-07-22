@@ -528,37 +528,32 @@ function renderDetailsScreen() {
     </div>
 
     <div class="bw-form-group">
-      <label class="bw-form-label">Reason for Visit <span class="bw-optional">(optional)</span></label>
+      <label class="bw-form-label">Reason for Visit <span class="bw-optional">(select any to proceed)</span></label>
       <div class="bw-reason-chips" role="group" aria-label="Reason for visit">
         ${reasons.map(r => `<button class="bw-chip ${widgetState.reason === r ? 'selected' : ''}"
           onclick="bwSelectReason('${r}')" aria-pressed="${widgetState.reason === r}">${r}</button>`).join('')}
       </div>
     </div>
-
-    <button class="bw-primary-btn" id="bwDetailsBtn" onclick="bwGoScreen('confirm')" ${widgetState.name ? '' : 'disabled'}>
-      Review Appointment
-    </button>
   `;
 }
 
 function renderConfirmScreen() {
   const fee = widgetState.type === 'video' ? '₹800' : (widgetState.location?.fee || '₹800');
+  const typeLabel = widgetState.type === 'video' ? 'Teleconsultation' : 'In-Person Visit';
   return `
     <div class="bw-back-row">
       <button class="bw-back-btn" onclick="bwGoScreen('details')" aria-label="Go back">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
       </button>
-      <span class="bw-screen-title">Confirm Appointment</span>
+      <span class="bw-screen-title">Confirm Appointment (${typeLabel})</span>
     </div>
 
     <div class="bw-summary-card">
       <div class="bw-summary-row"><span class="bw-summary-label">Patient</span><span class="bw-summary-val">${escapeHTML(widgetState.name)}</span></div>
       <div class="bw-summary-row"><span class="bw-summary-label">Mobile</span><span class="bw-summary-val">+91 ${escapeHTML(widgetState.phone || widgetState.patient?.phone || '')}</span></div>
       ${widgetState.email ? `<div class="bw-summary-row"><span class="bw-summary-label">Email</span><span class="bw-summary-val">${escapeHTML(widgetState.email)}</span></div>` : ''}
-      <div class="bw-summary-row"><span class="bw-summary-label">Type</span><span class="bw-summary-val">${widgetState.type === 'video' ? 'Video Consultation' : 'In-Person Visit'}</span></div>
       ${widgetState.type === 'clinic' ? `<div class="bw-summary-row"><span class="bw-summary-label">Location</span><span class="bw-summary-val">${escapeHTML(widgetState.location?.name || '')}</span></div>` : ''}
-      <div class="bw-summary-row"><span class="bw-summary-label">Date</span><span class="bw-summary-val">${formatDateForDisplay(widgetState.date)}</span></div>
-      <div class="bw-summary-row"><span class="bw-summary-label">Time</span><span class="bw-summary-val">${escapeHTML(widgetState.time)}</span></div>
+      <div class="bw-summary-row"><span class="bw-summary-label">Date &amp; Time</span><span class="bw-summary-val">${formatDateForDisplay(widgetState.date)} at ${escapeHTML(widgetState.time)}</span></div>
       <div class="bw-summary-row bw-summary-fee"><span class="bw-summary-label">Fee</span><span class="bw-summary-val bw-fee-highlight">${escapeHTML(fee)}</span></div>
       ${widgetState.reason ? `<div class="bw-summary-row"><span class="bw-summary-label">Reason</span><span class="bw-summary-val">${escapeHTML(widgetState.reason)}</span></div>` : ''}
     </div>
@@ -577,7 +572,7 @@ function renderConfirmScreen() {
     <div class="bw-confirm-error" id="bwConfirmError" role="alert" aria-live="polite" style="color:#e34948;font-size:12px;text-align:center;padding:0 20px 8px;"></div>
 
     <button class="bw-primary-btn bw-confirm-btn" id="bwFinalConfirmBtn" onclick="bwConfirm()" disabled>
-      Confirm Appointment
+      Review &amp; Confirm Appointment
     </button>
   `;
 }
@@ -615,9 +610,7 @@ function renderSuccessScreen() {
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347zm-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884zm8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
           WhatsApp Confirmation
         </a>
-        <button class="bw-done-btn" onclick="closeBooking()">Done</button>
       </div>
-    </div>
   `;
 }
 
@@ -925,13 +918,14 @@ async function bwVerifyEmailOTP() {
 
 // ── DETAILS ───────────────────────────────────────────────────────────────────
 function bwSelectReason(r) {
-  widgetState.reason = widgetState.reason === r ? '' : r;
+  widgetState.reason = r;
   const chips = document.querySelector('.bw-reason-chips');
   const reasons = ['Pregnancy', 'Infertility', 'PCOS', 'Routine Check-up', 'Menstrual Issues', 'Menopause', 'Ultrasound Review', 'Vaccination', 'Other'];
   if (chips) chips.innerHTML = reasons.map(re =>
     `<button class="bw-chip ${widgetState.reason === re ? 'selected' : ''}"
       onclick="bwSelectReason('${re}')" aria-pressed="${widgetState.reason === re}">${re}</button>`
   ).join('');
+  bwGoScreen('confirm'); // reuses existing name-required gate — see note below
 }
 
 function bwCheckDetails() {
@@ -1006,17 +1000,17 @@ function buildSuccessWAMessage() {
   const dl = formatDateForDisplay(s.date);
   const fee = s.type === 'video' ? '₹800' : (s.location?.fee || '₹800');
   return [
-    `Hi Dr. Puja%27s Clinic! 🙏`,
-    `I%27d like to confirm my appointment:`,
+    `Hi Dr. Puja's Clinic! 🙏`,
+    `I'd like to confirm my appointment:`,
     ``,
-    `🔖 Booking ID: ${s.bookingRef || ''}`,
-    `👤 Name: ${s.name}`,
-    `📱 Phone: +91 ${s.phone || s.patient?.phone || ''}`,
-    `📋 Type: ${s.type === 'video' ? 'Video Consultation' : 'In-Clinic Visit'}`,
+    `Booking ID: ${s.bookingRef || ''}`,
+    `Name: ${s.name}`,
+    `Phone: +91 ${s.phone || s.patient?.phone || ''}`,
+    `Type: ${s.type === 'video' ? 'Video Consultation' : 'In-Clinic Visit'}`,
     s.location && s.type !== 'video' ? `📍 Location: ${s.location.name}` : '',
-    `📅 Date: ${dl}`,
-    `⏰ Time: ${s.time}`,
-    `💰 Fee: ${fee}`,
+    `Date: ${dl}`,
+    `Time: ${s.time}`,
+    `Fee: ${fee}`,
     s.reason ? `💬 Reason: ${s.reason}` : '',
   ].filter(Boolean).join('\n');
 }
